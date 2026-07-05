@@ -1,0 +1,15 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE tooling
+.claude/
+.vscode/
+
+# Working docs (bukan bagian dari game)
+ide2.docx
+*.docx
+
+# Dependencies (kalau nanti ada)
+node_modules/

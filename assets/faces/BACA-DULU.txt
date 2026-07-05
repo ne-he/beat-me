@@ -1,0 +1,17 @@
+CARA MASANG FOTO MUKA KAMU
+===========================
+
+Taruh file PNG/JPG di folder ini dengan nama persis seperti di bawah:
+
+1. nemi.png         (WAJIB)   - muka normal / senyum sok cool
+2. nemi-kaget.png   (opsional) - muka kaget / "aw!"
+3. nemi-nangis.png  (opsional) - muka nangis / melas
+4. nemi-ko.png      (opsional) - muka KO / merem / melet
+
+CATATAN:
+- Cukup nemi.png doang game udah jalan penuh. Ekspresi lain bakal
+  digantikan efek otomatis (memar, air mata, bintang pusing, mata X).
+- Foto persegi (1:1) paling bagus, minimal 500x500 px.
+- Muka di tengah frame, karena bakal di-crop jadi lingkaran.
+- Kalau nama file beda, ubah path-nya di js/config.js bagian FACE_IMAGES.
+- Kalau belum ada foto sama sekali, game pakai muka kartun lucu (coba aja).
