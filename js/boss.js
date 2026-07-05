@@ -277,10 +277,15 @@ class Boss {
     ctx.rotate(this.rot + (this.ko ? Math.sin(this.t * 1.5) * 0.08 : 0));
 
     // spotlight lembut di belakang muka
-    const glow = ctx.createRadialGradient(0, 0, this.r * 0.4, 0, 0, this.r * 2);
-    glow.addColorStop(0, "rgba(255,80,160,0.22)");
-    glow.addColorStop(1, "rgba(255,80,160,0)");
-    ctx.fillStyle = glow;
+    // (gradient di-cache — cuma dibikin ulang kalau radius berubah, bukan tiap frame)
+    if (this._glowR !== this.r) {
+      const glow = ctx.createRadialGradient(0, 0, this.r * 0.4, 0, 0, this.r * 2);
+      glow.addColorStop(0, "rgba(255,80,160,0.22)");
+      glow.addColorStop(1, "rgba(255,80,160,0)");
+      this._glow = glow;
+      this._glowR = this.r;
+    }
+    ctx.fillStyle = this._glow;
     ctx.beginPath();
     ctx.arc(0, 0, this.r * 2, 0, TAU);
     ctx.fill();
@@ -346,9 +351,7 @@ class Boss {
 
     // simbol marah pas kena pukul (mode foto)
     if (this.hurtTimer > 0 && img && !this.images.kaget && !this.ko) {
-      ctx.font = `${this.r * 0.4}px sans-serif`;
-      ctx.textAlign = "center";
-      ctx.fillText("💢", this.r * 0.75, -this.r * 0.6);
+      drawEmoji(ctx, "💢", this.r * 0.75, -this.r * 0.6, this.r * 0.4);
     }
 
     ctx.restore(); // lepas scale+rotate+translate
@@ -357,13 +360,10 @@ class Boss {
     if (this.hpPct <= 10 || this.ko) {
       ctx.save();
       ctx.translate(this.x, this.y + koBob - this.r * 1.18);
-      ctx.font = `${this.r * 0.28}px sans-serif`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
       for (let i = 0; i < 3; i++) {
         const a = this.t * 3 + (i * TAU) / 3;
         ctx.globalAlpha = 0.6 + Math.sin(a) * 0.4;
-        ctx.fillText(i % 2 ? "⭐" : "💫", Math.cos(a) * this.r * 0.55, Math.sin(a) * this.r * 0.16);
+        drawEmoji(ctx, i % 2 ? "⭐" : "💫", Math.cos(a) * this.r * 0.55, Math.sin(a) * this.r * 0.16, this.r * 0.28);
       }
       ctx.restore();
       ctx.globalAlpha = 1;

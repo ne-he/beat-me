@@ -247,7 +247,7 @@ class Game {
 
     // juice
     this.effects.addShake(w.shake + (crit ? 0.25 : 0));
-    this.effects.stop(crit ? 0.09 : 0.045);
+    this.effects.stop(crit ? 0.07 : 0.03);   // hitstop dipangkas biar tap cepet gak kerasa nge-freeze
     this.effects.addFlash(crit ? 0.22 : 0.1);
 
     // ult charge
@@ -406,12 +406,9 @@ class Game {
     ctx.fillRect(0, 0, this.w, this.h);
 
     // hati ambient
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
     for (const a of this.ambient) {
       ctx.globalAlpha = a.alpha;
-      ctx.font = `${a.size}px sans-serif`;
-      ctx.fillText(a.emoji, a.x, a.y);
+      drawEmoji(ctx, a.emoji, a.x, a.y, a.size);
     }
     ctx.globalAlpha = 1;
 

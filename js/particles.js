@@ -3,9 +3,18 @@
    Ledakan emoji, percikan, dan hujan confetti hati.
    ============================================================ */
 
+const MAX_PARTICLES = 240;   // batas biar gak numpuk pas tap-tap cepet
+
 class ParticleSystem {
   constructor() {
     this.list = [];
+  }
+
+  // buang partikel tertua kalau kebanyakan (jaga frame rate)
+  _cap() {
+    if (this.list.length > MAX_PARTICLES) {
+      this.list.splice(0, this.list.length - MAX_PARTICLES);
+    }
   }
 
   emit(x, y, opts = {}) {
@@ -40,6 +49,7 @@ class ParticleSystem {
         sway: null,
       });
     }
+    this._cap();
   }
 
   // Hujan hati dari atas layar (buat menang)
@@ -62,6 +72,7 @@ class ParticleSystem {
         sway: rand(0, TAU),
       });
     }
+    this._cap();
   }
 
   update(dt) {
@@ -84,10 +95,7 @@ class ParticleSystem {
       ctx.translate(p.x, p.y);
       ctx.rotate(p.rot);
       if (p.emoji) {
-        ctx.font = `${p.size}px sans-serif`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(p.emoji, 0, 0);
+        drawEmoji(ctx, p.emoji, 0, 0, p.size);
       } else {
         ctx.fillStyle = p.color || "#ffd166";
         ctx.beginPath();

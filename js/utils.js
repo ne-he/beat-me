@@ -36,6 +36,38 @@ function roundRectPath(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
+/* ---------- EMOJI SPRITE CACHE ----------
+   ctx.fillText(emoji) itu MAHAL: tiap frame emoji di-rasterize ulang
+   (glyph warna-warni). Solusi: render tiap emoji ke canvas kecil SEKALI,
+   simpan, lalu drawImage bitmap-nya — jauh lebih murah, bikin game mulus. */
+const _emojiCache = new Map();
+const EMOJI_BASE = 80;   // resolusi render dasar (px)
+
+function emojiSprite(emoji) {
+  let spr = _emojiCache.get(emoji);
+  if (spr) return spr;
+  const pad = Math.ceil(EMOJI_BASE * 0.22);
+  const size = EMOJI_BASE + pad * 2;
+  const c = document.createElement("canvas");
+  c.width = c.height = size;
+  const cx = c.getContext("2d");
+  cx.font = `${EMOJI_BASE}px sans-serif`;
+  cx.textAlign = "center";
+  cx.textBaseline = "middle";
+  cx.fillText(emoji, size / 2, size / 2);
+  spr = { canvas: c, dim: size };
+  _emojiCache.set(emoji, spr);
+  return spr;
+}
+
+// Gambar emoji ter-pusat di (x, y) dengan tinggi target `size` px.
+// Hormatin transform & globalAlpha yang lagi aktif. Ganti fillText(emoji).
+function drawEmoji(ctx, emoji, x, y, size) {
+  const spr = emojiSprite(emoji);
+  const d = spr.dim * (size / EMOJI_BASE);
+  ctx.drawImage(spr.canvas, x - d / 2, y - d / 2, d, d);
+}
+
 // Pecah teks jadi beberapa baris sesuai lebar maksimum
 function wrapText(ctx, text, maxW) {
   const words = text.split(" ");

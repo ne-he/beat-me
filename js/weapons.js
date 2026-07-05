@@ -41,10 +41,7 @@ class WeaponManager {
       ctx.translate(s.x + 26, s.y - 20);
       ctx.rotate(rot);
       ctx.scale(scale, scale);
-      ctx.font = "52px sans-serif";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(s.emoji, 0, 0);
+      drawEmoji(ctx, s.emoji, 0, 0, 52);
       ctx.restore();
     }
     ctx.globalAlpha = 1;
@@ -55,10 +52,7 @@ class WeaponManager {
     ctx.save();
     ctx.translate(x + 14, y + 6);
     ctx.rotate(-0.5);
-    ctx.font = "40px sans-serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(this.current.emoji, 0, 0);
+    drawEmoji(ctx, this.current.emoji, 0, 0, 40);
     ctx.restore();
   }
 }
