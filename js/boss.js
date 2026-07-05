@@ -17,7 +17,7 @@ class Boss {
 
   _load(key, src) {
     const img = new Image();
-    img.onload = () => { this.images[key] = img; };
+    img.onload = () => { this.images[key] = this._prescale(img); };
     img.onerror = () => {};
     img.src = src;
   }
@@ -25,13 +25,26 @@ class Boss {
   // Foto upload dari title screen
   setCustomImage(url) {
     const img = new Image();
-    img.onload = () => { this.images.normal = img; this.custom = true; };
+    img.onload = () => { this.images.normal = this._prescale(img); this.custom = true; };
     img.src = url;
+  }
+
+  // Kecilin foto ke maks ~512px SEKALI pas load. Foto HP bisa 3000px+,
+  // dan drawImage foto raksasa tiap frame itu berat banget (biang lag utama).
+  _prescale(img) {
+    const big = Math.max(img.width, img.height);
+    if (!big || big <= 512) return img;
+    const s = 512 / big;
+    const c = document.createElement("canvas");
+    c.width = Math.round(img.width * s);
+    c.height = Math.round(img.height * s);
+    c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+    return c;
   }
 
   reset() {
     const g = this.game;
-    this.maxHp = CONFIG.BOSS.MAX_HP;
+    this.maxHp = this.game.currentLevelHp();
     this.hp = this.maxHp;
     this.ko = false;
 
@@ -133,6 +146,19 @@ class Boss {
     // sembuh dikit = memar & bekas tamparan pudar satu
     if (this.bruises.length) this.bruises.pop();
     this.vsy += 1.2; // bounce senang
+  }
+
+  // ronde baru: HP nambah, muka fresh lagi (memar & bekas tampol dibersihin)
+  nextLevel(hp) {
+    this.maxHp = hp;
+    this.hp = hp;
+    this.ko = false;
+    this.hurtTimer = 0;
+    this.wobbleT = 0;
+    this.bruises = [];
+    this.slapMarks = [];
+    this.tears = [];
+    this.vsx -= 2; this.vsy += 2;   // bounce dikit pas mulai ronde
   }
 
   update(dt) {
@@ -306,28 +332,21 @@ class Boss {
       this._drawFallbackFace(ctx);
     }
 
-    // memar permanen
+    // memar permanen (pakai blob bitmap ter-cache, bukan gradient tiap frame)
+    const bruiseSpr = softBlob("120,60,180");
     for (const b of this.bruises) {
-      const gr = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
-      gr.addColorStop(0, `rgba(120,60,180,${b.a})`);
-      gr.addColorStop(1, "rgba(120,60,180,0)");
-      ctx.fillStyle = gr;
-      ctx.beginPath();
-      ctx.arc(b.x, b.y, b.r, 0, TAU);
-      ctx.fill();
+      ctx.globalAlpha = b.a;
+      ctx.drawImage(bruiseSpr, b.x - b.r, b.y - b.r, b.r * 2, b.r * 2);
     }
 
     // bekas tamparan merah (memudar)
+    const slapSpr = softBlob("255,60,60");
+    const rr = this.r * 0.3;
     for (const m of this.slapMarks) {
-      const rr = this.r * 0.3;
-      const gr = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, rr);
-      gr.addColorStop(0, `rgba(255,60,60,${0.4 * m.life})`);
-      gr.addColorStop(1, "rgba(255,60,60,0)");
-      ctx.fillStyle = gr;
-      ctx.beginPath();
-      ctx.arc(m.x, m.y, rr, 0, TAU);
-      ctx.fill();
+      ctx.globalAlpha = 0.4 * m.life;
+      ctx.drawImage(slapSpr, m.x - rr, m.y - rr, rr * 2, rr * 2);
     }
+    ctx.globalAlpha = 1;
 
     // air mata di pipi
     ctx.fillStyle = "rgba(120,190,255,0.85)";

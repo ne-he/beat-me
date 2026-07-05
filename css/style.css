@@ -104,17 +104,24 @@ html, body {
   height: 100%;
   width: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #ff2e88, #ff7ab8, #ff2e88);
+  background: linear-gradient(90deg, #26d367, #7bff9e, #26d367);
   background-size: 200% 100%;
   animation: hpShimmer 2.5s linear infinite;
   transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  box-shadow: 0 0 12px var(--pink-glow);
+  box-shadow: 0 0 12px rgba(38, 211, 103, 0.5);
 }
 
-#hp-fill.low {
+#hp-fill.hp-mid {
+  background: linear-gradient(90deg, #ffb020, #ffe08a, #ffb020);
+  background-size: 200% 100%;
+  box-shadow: 0 0 12px rgba(255, 209, 102, 0.5);
+}
+
+#hp-fill.hp-low {
   background: linear-gradient(90deg, #ff3860, #ff5e3a, #ff3860);
   background-size: 200% 100%;
   animation: hpShimmer 0.8s linear infinite;
+  box-shadow: 0 0 12px rgba(255, 56, 96, 0.55);
 }
 
 @keyframes hpShimmer {

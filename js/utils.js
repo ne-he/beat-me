@@ -68,6 +68,26 @@ function drawEmoji(ctx, emoji, x, y, size) {
   ctx.drawImage(spr.canvas, x - d / 2, y - d / 2, d, d);
 }
 
+// Blob radial lembut (buat memar & bekas tampol) — di-cache biar gak bikin
+// gradient baru tiap frame (dulu bisa 14 gradient/frame = berat di HP).
+// Warna dikasih string "r,g,b"; pusat opaque, pinggir transparan.
+const _blobCache = new Map();
+function softBlob(rgb) {
+  let c = _blobCache.get(rgb);
+  if (c) return c;
+  const S = 72;
+  c = document.createElement("canvas");
+  c.width = c.height = S;
+  const cx = c.getContext("2d");
+  const g = cx.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2);
+  g.addColorStop(0, `rgba(${rgb},1)`);
+  g.addColorStop(1, `rgba(${rgb},0)`);
+  cx.fillStyle = g;
+  cx.fillRect(0, 0, S, S);
+  _blobCache.set(rgb, c);
+  return c;
+}
+
 // Pecah teks jadi beberapa baris sesuai lebar maksimum
 function wrapText(ctx, text, maxW) {
   const words = text.split(" ");

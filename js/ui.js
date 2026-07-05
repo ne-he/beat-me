@@ -25,9 +25,9 @@ class UI {
     // teks dari config
     this.$("game-title").textContent = CONFIG.TITLE;
     this.$("subtitle").innerHTML =
-      `Spesial buat <b>${CONFIG.NAMA_PACAR}</b> 💖 — hajar <b>${CONFIG.NAMA_BOSS}</b> sepuasnya!`;
+      `khusus buat <b>${CONFIG.NAMA_PACAR}</b> 💛 dari <b>${CONFIG.NAMA_BOSS}</b>. pukulin aja muka aku sampe puas ya`;
     this.$("ult-label").textContent = CONFIG.ULT.NAME;
-    this.$("hp-label").textContent = "💅 Ketahanan Ego";
+    this.$("hp-label").textContent = "❤️ HP";
 
     this._buildToolbar();
     this._wire();
@@ -37,7 +37,7 @@ class UI {
     this.weaponBtns = CONFIG.WEAPONS.map((w, i) => {
       const btn = document.createElement("button");
       btn.className = "weapon-btn" + (i === 0 ? " active" : "");
-      btn.title = `${w.nama} — ${w.desc}`;
+      btn.title = `${w.nama}: ${w.desc}`;
       btn.innerHTML = `<span class="w-emoji">${w.emoji}</span><span class="w-key">${i + 1}</span>`;
       btn.addEventListener("click", () => this.game.selectWeapon(i));
       this.toolbar.appendChild(btn);
@@ -72,8 +72,13 @@ class UI {
     const pct = clamp((hp / max) * 100, 0, 100);
     this.hpFill.style.width = pct + "%";
     this.hpNum.textContent = `${Math.ceil(hp)} / ${max}`;
-    this.phaseLabel.textContent = getPhaseLabel(pct);
-    this.hpFill.classList.toggle("low", pct <= 25);
+    this.hpFill.classList.toggle("hp-mid", pct > 30 && pct <= 60);
+    this.hpFill.classList.toggle("hp-low", pct <= 30);
+  }
+
+  // Ronde ke berapa (tampil di pojok bar HP)
+  setLevel(n, total, name) {
+    this.phaseLabel.textContent = `Ronde ${n}/${total}`;
   }
 
   setCombo(n) {

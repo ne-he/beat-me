@@ -23,6 +23,7 @@ class Game {
     this._resize();
     addEventListener("resize", () => this._resize());
 
+    this.level = 0;
     this.boss = new Boss(this);
     this.ui = new UI(this);
     this._resetRound();
@@ -45,7 +46,9 @@ class Game {
   /* ---------- setup ---------- */
 
   _resize() {
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    // Di layar kecil (HP) turunin DPR biar gak berat — fill-rate mobile itu mahal.
+    const small = Math.min(innerWidth, innerHeight) < 820;
+    const dpr = Math.min(small ? 1.5 : 2, window.devicePixelRatio || 1);
     this.w = innerWidth;
     this.h = innerHeight;
     this.dpr = dpr;
@@ -148,8 +151,10 @@ class Game {
   start() {
     SFX.init();
     this.state = "PLAYING";
+    this.level = 0;
     this.boss.reset();
     this._resetRound();
+    this._showLevel();
     this.ui.hideTitle();
   }
 
@@ -157,10 +162,16 @@ class Game {
     SFX.init();
     if (this.state === "TITLE") return;
     this.state = "PLAYING";
+    this.level = 0;
     this.boss.reset();
     this._resetRound();
+    this._showLevel();
     this.ui.hideWin();
     this.bubble.text = null;
+  }
+
+  currentLevelHp() {
+    return (CONFIG.LEVELS[this.level] || CONFIG.LEVELS[0]).hp;
   }
 
   selectWeapon(i) {
@@ -268,7 +279,7 @@ class Game {
     }
 
     this.ui.setHP(this.boss.hp, this.boss.maxHp);
-    if (this.boss.hp <= 0) this.winSequence(false);
+    if (this.boss.hp <= 0) this.bossDown(false);
   }
 
   // dipanggil boss waktu nabrak dinding dengan kecepatan tinggi
@@ -292,7 +303,7 @@ class Game {
         break;
       }
     }
-    if (this.boss.hp <= 0) this.winSequence(false);
+    if (this.boss.hp <= 0) this.bossDown(false);
   }
 
   useUlt() {
@@ -316,7 +327,43 @@ class Game {
 
     this.boss.takeDamage(this.boss.hp, 0, -1, this.boss.x, this.boss.y);
     this.ui.setHP(0, this.boss.maxHp);
-    this.winSequence(true);
+    this.bossDown(true);
+  }
+
+  // Boss tumbang: kalau masih ada ronde lagi, lanjut ronde berikut (HP nambah).
+  // Kalau ini ronde terakhir, baru menang beneran.
+  bossDown(byUlt) {
+    if (this.state !== "PLAYING") return;
+    if (this.level < CONFIG.LEVELS.length - 1) this.advanceLevel();
+    else this.winSequence(byUlt);
+  }
+
+  advanceLevel() {
+    this.level++;
+    const lv = CONFIG.LEVELS[this.level];
+
+    SFX.comboUp();
+    this.effects.addFlash(0.35, "#ffd166");
+    this.effects.addShake(0.4);
+    this.particles.confettiHearts(this.w, 22);
+    this.popups.add("RONDE " + (this.level + 1), this.w / 2, this.h * 0.30,
+      { size: 44, color: "#ffd166", crit: true, dur: 1.6 });
+    this.popups.add(lv.name, this.w / 2, this.h * 0.30 + 42,
+      { size: 22, color: "#ffffff", dur: 1.6, dy: -34 });
+    this.bubble.say(pick(CONFIG.LEVEL_CLEAR), 2.4);
+
+    this.boss.nextLevel(lv.hp);
+    this.combo = 0;
+    this.comboTimer = 0;
+    this.idleTimer = 0;
+    this.ui.setCombo(0);
+    this.ui.setHP(this.boss.hp, this.boss.maxHp);
+    this._showLevel();
+  }
+
+  _showLevel() {
+    const lv = CONFIG.LEVELS[this.level];
+    this.ui.setLevel(this.level + 1, CONFIG.LEVELS.length, lv.name);
   }
 
   winSequence(byUlt) {
@@ -383,7 +430,8 @@ class Game {
     this.ambientT -= dt;
     if (this.ambientT <= 0) {
       this.ambientT = rand(0.6, 1.2);
-      this.ambient.push({
+      // dibatasi 16 biar gak numpuk (dulu bisa 50+ = beban render diam-diam)
+      if (this.ambient.length < 16) this.ambient.push({
         x: rand(0, this.w), y: this.h + 30,
         v: rand(14, 42), size: rand(11, 24),
         alpha: rand(0.05, 0.13), emoji: pick(["💗", "💖", "💘"]),

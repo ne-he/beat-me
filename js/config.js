@@ -7,9 +7,9 @@
 
 const CONFIG = {
 
-  // ---------- IDENTITAS (WAJIB GANTI) ----------
-  NAMA_BOSS:  "Nemi",        // nama kamu (si boss yang dipukulin)
-  NAMA_PACAR: "Sayang",      // TODO: ganti nama pacar kamu
+  // ---------- IDENTITAS ----------
+  NAMA_BOSS:  "Nemi",        // ini aku, yang dipukulin
+  NAMA_PACAR: "ler",         // panggilan buat Kler
 
   TITLE: "BEAT NEMI",
 
@@ -26,7 +26,7 @@ const CONFIG = {
 
   // ---------- GAMEPLAY TUNING ----------
   BOSS: {
-    MAX_HP: 300,          // total "Ketahanan Ego"
+    MAX_HP: 300,          // HP dasar (cadangan kalau LEVELS kosong)
     RADIUS_FRAC: 0.17,    // ukuran muka relatif layar
     WANDER_SPEED: 55,     // kecepatan jalan-jalan boss (px/detik)
     PANIC_MULT: 1.8,      // di bawah 50% HP boss makin lincah
@@ -40,6 +40,16 @@ const CONFIG = {
   CRIT:  { CHANCE: 0.12, MULT: 2.2, SLOWMO: 0.35, SLOWMO_DUR: 0.5 },
   ULT:   { MAX: 100, PER_HIT: 4, PER_KISS: 2, NAME: "🤗 PELUKAN MAUT" },
   WALL_SLAM: { MIN_SPEED: 750, DMG: 14 },  // lempar boss ke dinding = damage
+
+  // ---------- LEVEL / RONDE ----------
+  // Tiap ronde HP-nya makin banyak biar gak sekali-dua kali kelar.
+  LEVELS: [
+    { name: "pemanasan",        hp: 300 },
+    { name: "nemi mulai kesel", hp: 480 },
+    { name: "nemi sok jago",    hp: 700 },
+    { name: "nemi drama",       hp: 950 },
+    { name: "nemi mode akhir",  hp: 1300 },
+  ],
 
   // ---------- SENJATA ----------
   WEAPONS: [
@@ -88,49 +98,63 @@ const CONFIG = {
   ],
 
   // ---------- DIALOG ----------
+  // pas kena pukul (sering muncul, sengaja pendek)
   DIALOGS_HIT: [
-    "Aw sayanggg 😭",
-    "Beb sakit tauuu!",
-    "Minta ampunnn 🙏",
-    "Masih dicinta gak sih? 🥺",
-    "Kamu kejam banget sih 💔",
-    "Pelan-pelan donggg",
-    "I love you... tapi kok dipukul 😢",
-    "Jangan mukul muka ganteng ini!",
-    "Kangen kamu malah dipukul 😭",
+    "aw",
+    "ish",
+    "woi",
+    "aduh",
+    "ah sakit",
+    "gini doang?",
+    "hei ler",
+    "sakit tau",
+    "eh eh",
+    "pelan dong ler",
+    "yah",
+    "belum kapok nih",
   ],
 
+  // pas HP nembus ambang tertentu di ronde ini
   DIALOGS_PHASE: {
-    75: ["Eh?! Seriusan nih?! 😮", "Oke oke aku mulai takut..."],
-    50: ["Mode serius: ON 😎💦", "Ego-ku mulai retak beb..."],
-    25: ["HUWEEE 😭 tapi aku tetep ganteng kan?", "Ampun beb ampuuun 😭"],
-    10: ["Aku... mleyottt 🥴", "Dunia berputar... kamu tetap satu 🥴💫"],
+    75: ["eh serius nih ler?", "oke oke aku mulai takut"],
+    50: ["ler kok tega banget", "mulai sakit beneran nih"],
+    25: ["ampun ler ampun", "aku nyerah deh kayaknya"],
+    10: ["ler aku udah lemes", "pukulan kamu berasa banget"],
   },
 
+  // pas kena senjata cium (malah nyembuhin)
   DIALOGS_KISS: [
-    "Nah gitu dong 😚",
-    "Lagi dong lagiii 🥰",
-    "Ego-ku pulih seketika 💖",
-    "Ciuman jarak jauh diterima ✅",
+    "nah gitu dong",
+    "lagi dong ler",
+    "jadi semangat lagi aku",
+    "muah juga ler",
   ],
 
+  // pas kamu diem lama
   DIALOGS_IDLE: [
-    "Udah nyerah? 😏",
-    "Kangen ya makanya berhenti mukul? 😘",
-    "Capek? Sini peluk dulu 🤗",
-    "Kok diem? Aku kan gemesin 😎",
+    "udah capek ler?",
+    "kangen ya makanya berhenti mukul aku",
+    "sini peluk dulu",
+    "kok diem sih ler",
   ],
 
-  DIALOGS_SLAM: ["GUBRAK!", "ADUH TEMBOKK!", "WADAW!"],
+  // pas nemi kelempar nabrak tembok
+  DIALOGS_SLAM: ["gubrak", "aduh tembok", "wadaw"],
 
-  // ---------- QUOTE PAS KO ----------
+  // pas satu ronde kelar (nemi nyombong dikit)
+  LEVEL_CLEAR: [
+    "ronde depan aku lebih kuat loh ler",
+    "belum selesai dong, ayo lagi",
+    "boleh juga kamu ler, tapi belum menang",
+    "oke sekarang aku beneran serius",
+  ],
+
+  // ---------- PAS NEMI AKHIRNYA KALAH ----------
   KO_QUOTES: [
-    "Aku menyerah... tapi aku tetep sayang kamu 💕",
-    "Aku kalah... tapi hatiku tetep milikmu.",
-    "Pukulan kamu lebih manis dari ciuman orang lain.",
-    "Damage-nya 9999, tapi sayangku unlimited.",
-    "Boss terkuat yang pernah aku lawan... adalah rindu kamu.",
+    "oke oke aku kalah. tapi tetep paling sayang kamu kok ler",
+    "kamu menang ler. hadiahnya aku, seutuhnya buat kamu",
+    "dipukulin kamu aja rasanya kangen. cepet ketemu ya ler",
   ],
 
-  ULT_QUOTE: "Di-Pelukan-Maut sampai KO... kekalahan paling bahagia sedunia 🤗💖",
+  ULT_QUOTE: "dipeluk kamu sampe kalah gini, aku rela banget ler 💛",
 };

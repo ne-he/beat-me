@@ -3,7 +3,7 @@
    Ledakan emoji, percikan, dan hujan confetti hati.
    ============================================================ */
 
-const MAX_PARTICLES = 240;   // batas biar gak numpuk pas tap-tap cepet
+const MAX_PARTICLES = 150;   // batas biar gak numpuk pas tap-tap / spam cepet
 
 class ParticleSystem {
   constructor() {

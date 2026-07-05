@@ -14,6 +14,8 @@ class PopupSystem {
       crit = false, dy = -90, dur = 1.0,
     } = opts;
     this.list.push({ text, x, y, size, color, stroke, crit, dy, dur, age: 0, tilt: rand(-0.12, 0.12) });
+    // cap biar spam gak numpuk teks (strokeText itu lumayan berat)
+    if (this.list.length > 28) this.list.splice(0, this.list.length - 28);
   }
 
   update(dt) {
