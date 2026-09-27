@@ -1,5 +1,5 @@
 /* ============================================================
-   BEAT NEMI — WEAPONS
+   BEAT NEMI: WEAPONS
    Ganti senjata, animasi ayunan, dan kursor emoji.
    Data senjata ada di config.js (CONFIG.WEAPONS).
    ============================================================ */

@@ -1,5 +1,5 @@
 /* ============================================================
-   BEAT NEMI — AUDIO
+   BEAT NEMI: AUDIO
    Semua sound effect disintesis pakai Web Audio API,
    jadi TIDAK PERLU file MP3 sama sekali.
    ============================================================ */

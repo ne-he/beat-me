@@ -1,5 +1,5 @@
 /* ============================================================
-   BEAT NEMI — POPUPS & DIALOG BUBBLE
+   BEAT NEMI: POPUPS & DIALOG BUBBLE
    Teks damage melayang ("DUAK!", "500 RINDU") + bubble omongan boss.
    ============================================================ */
 
@@ -52,7 +52,7 @@ class PopupSystem {
   }
 }
 
-/* Bubble omongan si boss — digambar di canvas, ngikutin posisi boss */
+/* Bubble omongan si boss: digambar di canvas, ngikutin posisi boss */
 class DialogueBubble {
   constructor() {
     this.text = null;

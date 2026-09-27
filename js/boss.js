@@ -1,5 +1,5 @@
 /* ============================================================
-   BEAT NEMI — BOSS (SI MUKA)
+   BEAT NEMI: BOSS (SI MUKA)
    Fisika: jalan-jalan sendiri, bisa di-drag & dilempar,
    mantul di dinding, squash & stretch pas kena pukul.
    Visual: foto asli (kalau ada) / muka kartun fallback,
@@ -303,7 +303,7 @@ class Boss {
     ctx.rotate(this.rot + (this.ko ? Math.sin(this.t * 1.5) * 0.08 : 0));
 
     // spotlight lembut di belakang muka
-    // (gradient di-cache — cuma dibikin ulang kalau radius berubah, bukan tiap frame)
+    // (gradient di-cache: cuma dibikin ulang kalau radius berubah, bukan tiap frame)
     if (this._glowR !== this.r) {
       const glow = ctx.createRadialGradient(0, 0, this.r * 0.4, 0, 0, this.r * 2);
       glow.addColorStop(0, "rgba(255,80,160,0.22)");
@@ -402,7 +402,7 @@ class Boss {
     }
   }
 
-  /* Muka kartun fallback — dipakai kalau foto belum ditaruh.
+  /* Muka kartun fallback: dipakai kalau foto belum ditaruh.
      Ekspresi ngikutin fase HP (termasuk kacamata hitam di fase serius). */
   _drawFallbackFace(ctx) {
     const r = this.r;

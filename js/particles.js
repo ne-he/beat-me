@@ -1,5 +1,5 @@
 /* ============================================================
-   BEAT NEMI — PARTICLE SYSTEM
+   BEAT NEMI: PARTICLE SYSTEM
    Ledakan emoji, percikan, dan hujan confetti hati.
    ============================================================ */
 

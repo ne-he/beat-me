@@ -1,5 +1,5 @@
 /* ============================================================
-   BEAT NEMI — UTILS
+   BEAT NEMI: UTILS
    Fungsi bantu matematika & gambar. Nggak perlu diedit.
    ============================================================ */
 
@@ -39,7 +39,7 @@ function roundRectPath(ctx, x, y, w, h, r) {
 /* ---------- EMOJI SPRITE CACHE ----------
    ctx.fillText(emoji) itu MAHAL: tiap frame emoji di-rasterize ulang
    (glyph warna-warni). Solusi: render tiap emoji ke canvas kecil SEKALI,
-   simpan, lalu drawImage bitmap-nya — jauh lebih murah, bikin game mulus. */
+   simpan, lalu drawImage bitmap-nya, jauh lebih murah, bikin game mulus. */
 const _emojiCache = new Map();
 const EMOJI_BASE = 80;   // resolusi render dasar (px)
 
@@ -68,7 +68,7 @@ function drawEmoji(ctx, emoji, x, y, size) {
   ctx.drawImage(spr.canvas, x - d / 2, y - d / 2, d, d);
 }
 
-// Blob radial lembut (buat memar & bekas tampol) — di-cache biar gak bikin
+// Blob radial lembut (buat memar & bekas tampol), di-cache biar gak bikin
 // gradient baru tiap frame (dulu bisa 14 gradient/frame = berat di HP).
 // Warna dikasih string "r,g,b"; pusat opaque, pinggir transparan.
 const _blobCache = new Map();

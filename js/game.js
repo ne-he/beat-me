@@ -1,5 +1,5 @@
 /* ============================================================
-   BEAT NEMI — GAME (otak utama)
+   BEAT NEMI: GAME (otak utama)
    Game loop, input (tap = pukul, tahan+seret = lempar),
    damage, combo, crit, ultimate, menang, dan render.
    ============================================================ */
@@ -46,7 +46,7 @@ class Game {
   /* ---------- setup ---------- */
 
   _resize() {
-    // Di layar kecil (HP) turunin DPR biar gak berat — fill-rate mobile itu mahal.
+    // Di layar kecil (HP) turunin DPR biar gak berat, fill-rate mobile itu mahal.
     const small = Math.min(innerWidth, innerHeight) < 820;
     const dpr = Math.min(small ? 1.5 : 2, window.devicePixelRatio || 1);
     this.w = innerWidth;

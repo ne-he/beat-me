@@ -1,4 +1,4 @@
-# Situs statis — gak ada build step. Netlify langsung serve dari root.
+# Situs statis: gak ada build step. Netlify langsung serve dari root.
 [build]
   publish = "."
 

@@ -1,5 +1,5 @@
 /* ============================================================
-   BEAT NEMI — CONFIG
+   BEAT NEMI: CONFIG
    ============================================================
    INI SATU-SATUNYA FILE YANG PERLU KAMU EDIT.
    Ganti nama, dialog, damage text, dll di sini.
@@ -15,7 +15,7 @@ const CONFIG = {
 
   // ---------- FOTO MUKA ----------
   // Minimal taruh 1 file: assets/faces/nemi.png
-  // Sisanya OPSIONAL — kalau nggak ada, game otomatis pakai
+  // Sisanya OPSIONAL: kalau nggak ada, game otomatis pakai
   // foto normal + efek decal (memar, air mata, bintang pusing).
   FACE_IMAGES: {
     normal: "assets/faces/nemi.png",

@@ -1,6 +1,6 @@
 # 👊 BEAT NEMI
 
-Game "Beat the Boss" versi LDR — pacar kamu bisa mukul, nampol, ngelempar,
+Game "Beat the Boss" versi LDR, pacar kamu bisa mukul, nampol, ngelempar,
 bahkan **nyium** muka kamu sampai KO. Dibuat penuh cinta (dan sedikit kekerasan kartun).
 
 **Zero dependency. Zero build step.** Vanilla JS + Canvas. Dobel-klik `index.html` langsung jalan.
@@ -16,10 +16,10 @@ bahkan **nyium** muka kamu sampai KO. Dibuat penuh cinta (dan sedikit kekerasan 
 | Combo system | Combo x10 = "RAMPAGE OF LOVE!", damage naik tiap 5 combo |
 | Critical hit | 12% chance, slow-motion + zoom + "KRITIS!!" |
 | Boss phases | Sok Cool 😎 → Panik 😮 → Keringetan 😰 → Nangis 😭 → Mleyot 🥴 → KO 😵 |
-| Ultimate | 🤗 PELUKAN MAUT — isi bar, langsung KO + hujan hati |
-| Damage decals | Memar, bekas tamparan, air mata, bintang pusing — numpuk di foto |
+| Ultimate | 🤗 PELUKAN MAUT: isi bar, langsung KO + hujan hati |
+| Damage decals | Memar, bekas tamparan, air mata, bintang pusing, numpuk di foto |
 | Dialog receh | Boss ngomong sendiri per fase + ngeledek kalau kamu diem |
-| SFX | Semua suara disintesis Web Audio — nggak butuh file MP3 |
+| SFX | Semua suara disintesis Web Audio, nggak butuh file MP3 |
 | Rekor | Waktu tercepat, combo tertinggi, total KO (localStorage) |
 | Mobile-ready | Touch, responsive, safe-area |
 
@@ -45,7 +45,7 @@ bahkan **nyium** muka kamu sampai KO. Dibuat penuh cinta (dan sedikit kekerasan 
 
 ```
 beatme/
-├── index.html          # entry — HUD, overlay, urutan script
+├── index.html          # entry, HUD, overlay, urutan script
 ├── css/style.css       # tema dark romantic arcade
 ├── js/
 │   ├── config.js       # ⭐ SATU-SATUNYA file yang perlu kamu edit
@@ -67,9 +67,9 @@ beatme/
 - Kurang brutal? Naikin `dmg` senjata atau `CRIT.CHANCE`.
 - Boss kecepetan lari? Turunin `BOSS.WANDER_SPEED`.
 
-## 💡 Ide polish nanti (JANGAN sekarang — ship dulu!)
+## 💡 Ide polish nanti (JANGAN sekarang: ship dulu!)
 
-- Foto ekspresi asli (kaget/nangis/KO) — efek paling besar per menit usaha
+- Foto ekspresi asli (kaget/nangis/KO): efek paling besar per menit usaha
 - Ganti dialog jadi inside joke kalian
 - Musik background lo-fi
 - Mode "balas dendam": muka pacar kamu jadi boss ke-2

@@ -1,5 +1,5 @@
 /* ============================================================
-   BEAT NEMI — SCREEN EFFECTS
+   BEAT NEMI: SCREEN EFFECTS
    Screen shake, flash, hitstop, slow motion, punch-zoom.
    Ini "bumbu juice" yang bikin pukulan berasa mantap.
    ============================================================ */
